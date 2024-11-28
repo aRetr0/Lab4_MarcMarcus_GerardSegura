@@ -1,6 +1,5 @@
 # mimedecoder.py
 import os
-import re
 from part1.b64decoder import base64_decoder
 
 def parse_headers(headers_section: str) -> dict:
@@ -15,6 +14,17 @@ def parse_headers(headers_section: str) -> dict:
             key, value = line.split(': ', 1)
             headers[key] = value
     return headers
+
+def extract_boundary(content_type: str) -> str:
+    """
+    Extract the boundary string from the Content-Type header.
+    :param content_type:
+    :return:
+    """
+    boundary_prefix = 'boundary="'
+    start = content_type.find(boundary_prefix) + len(boundary_prefix)
+    end = content_type.find('"', start)
+    return content_type[start:end]
 
 def decode_mime_message(file_path: str) -> None:
     """
@@ -36,7 +46,7 @@ def decode_mime_message(file_path: str) -> None:
             header_file.write(f"{key}: {value}\n")
 
     # Identify boundary in the Content-Type header
-    boundary = re.search(r'boundary="([^"]+)"', headers.get('Content-Type', '')).group(1)
+    boundary = extract_boundary(headers.get('Content-Type', ''))
 
     # Split the body into parts using the boundary
     parts = body_section.split(f'--{boundary}')
@@ -52,7 +62,11 @@ def decode_mime_message(file_path: str) -> None:
         content_transfer_encoding = part_headers.get('Content-Transfer-Encoding', '').lower()
 
         if 'attachment' in content_disposition:
-            filename = re.search(r'filename="([^"]+)"', content_disposition).group(1)
+            filename_prefix = 'filename="'
+            start = content_disposition.find(filename_prefix) + len(filename_prefix)
+            end = content_disposition.find('"', start)
+            filename = content_disposition[start:end]
+
             if content_transfer_encoding == 'base64':
                 decoded_data = base64_decoder(part_body)
             else:
