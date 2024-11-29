@@ -1,7 +1,7 @@
 # sendmail.py
 import smtplib
 from email import message_from_file
-import os
+
 
 def send_email():
     # Set up SMTP server configuration and credentials
@@ -24,6 +24,7 @@ def send_email():
             print("Email sent successfully.")
     except Exception as e:
         print(f"Failed to send email: {e}")
+
 
 if __name__ == "__main__":
     send_email()
