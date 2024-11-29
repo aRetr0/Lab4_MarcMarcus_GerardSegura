@@ -21,7 +21,7 @@ def build_mime_message(from_addr: str,
                        cc_addr: str,
                        subject: str,
                        body_text: str,
-                       attachments: str) -> str:
+                       attachments: list[str]) -> str:
     """
     Build a MIME message with the provided parameters.
     :param from_addr:
@@ -74,9 +74,9 @@ def build_mime_message(from_addr: str,
 
 
 def main():
-    from_addr = "sender@example.com"
-    to_addr = "recipient@example.com"
-    cc_addr = "cc@example.com"
+    from_addr = "smpt2go@tecno-campus.cat"
+    to_addr = "gseguraa@edu.tecnocampus.cat"
+    cc_addr = "mmarcusm@edu.tecnocampus.cat"
     subject = "Subject of the email"
 
     # Read body text
