@@ -74,7 +74,7 @@ def build_mime_message(from_addr: str,
 
 
 def main():
-    from_addr = "smpt2go@tecno-campus.cat"
+    from_addr = "smtp2go@tecno-campus.cat"
     to_addr = "gseguraa@edu.tecnocampus.cat"
     cc_addr = "mmarcusm@edu.tecnocampus.cat"
     subject = "Subject of the email"

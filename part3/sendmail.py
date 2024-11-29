@@ -18,6 +18,7 @@ def send_email():
     try:
         # Connect to the SMTP server and send the e-mail
         with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
             server.login(smtp_user, smtp_password)
             server.send_message(mime_message)
             print("Email sent successfully.")
